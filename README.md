@@ -5,7 +5,7 @@
    [카카오 책검색 API](https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book)를 이용하였습니다.
    
    - 과제 수행 전략 및 방법
-    - 빈 칸
+     - 작성 예정
   
   - 사용한 외부 라이브러리
     - 이미지 로딩을 위해 [Glide](https://github.com/bumptech/glide)를 사용하였습니다.
