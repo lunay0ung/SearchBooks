@@ -1,13 +1,10 @@
 package com.luna.searchbooks.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -26,12 +23,18 @@ class BookListFragment : Fragment() {
     private lateinit var bookClickListener: OnBookSelected
    // private lateinit var toolbar: Toolbar
 
+   companion object {
+       fun newInstance(): BookListFragment {
+           return BookListFragment()
+       }
+   }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.book_list_fragment, container, false)
 
@@ -39,10 +42,6 @@ class BookListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //textView = view.findViewById(R.id.first_fragment_text)
-       // textView.text  = "1st Fragment"
-
-        //toolbar = view.findViewById(R.id.toolbar)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
