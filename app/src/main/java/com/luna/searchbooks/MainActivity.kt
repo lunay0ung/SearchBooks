@@ -54,12 +54,10 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelected {
             }
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d(TAG, "검색어 변경: "+newText)
-                //adapter.filter.filter(newText)
                 return true
             }
         })
         return super.onCreateOptionsMenu(menu)
     }
-
 
 }

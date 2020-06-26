@@ -21,7 +21,6 @@ class BookAdapter(
     private val context: Context,
     private val bookList: PagedList<Book>,
     private val bookClickListner: BookListFragment.OnBookSelected
-//    private val bookClickListner: OnItemClickListener
 ) : PagedListAdapter<Book, BookAdapter.BookViewHolder>(BOOK_COMPARATOR) {
 
     private val TAG = BookAdapter::class.java.simpleName
@@ -31,19 +30,14 @@ class BookAdapter(
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.book_list_item, parent, false)
 
-        Log.d(TAG, ">>> onCreateViewHolder")
         return BookViewHolder(view)
     }
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
 
         val book = getItem(position)
         holder.itemView.setOnClickListener {
-           // bookClickListner.onClickBook(book!!)
             bookClickListner.onBookSelected(book!!)
         }
-
-
-        Log.d(TAG, ">>> onBindViewHolder book")
         book?.let { holder.bind(it) }
     }
 
@@ -84,12 +78,6 @@ class BookAdapter(
             status.text = book.status
         }
     }
-
-    //상품 클릭 시 동작할 리스너 인터페이스 -> viewmodel이나 activity에서 구현해 사용 가능
-    interface OnItemClickListener {
-        fun onClickBook(book: Book)
-    }
-
 
     companion object {
         private val BOOK_COMPARATOR = object : DiffUtil.ItemCallback<Book>() {

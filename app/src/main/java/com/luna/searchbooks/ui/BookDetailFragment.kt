@@ -24,9 +24,7 @@ import java.util.*
 
 class BookDetailFragment: Fragment() {
 
-
     private val TAG = BookDetailFragment::class.java.simpleName
-    //private lateinit var binding: BookDetailFragmentBinding
 
     private lateinit var book: Book
     private lateinit var thumbnail: ImageView

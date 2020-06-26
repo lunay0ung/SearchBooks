@@ -29,7 +29,6 @@ class BookListFragment : Fragment() {
        }
 
        fun newInstance(query: String): BookListFragment {
-           Log.d("newInstance", ">> 전달된 쿼리: $query")
            val fragment = BookListFragment()
            val args = Bundle()
            args.putString("query", query)
@@ -43,10 +42,7 @@ class BookListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //setHasOptionsMenu(true)
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.book_list_fragment, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,13 +50,11 @@ class BookListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-
         val args = arguments
         searchWord = args?.getString("query")
-        Log.d(TAG, "넘어올까 $searchWord")
 
         if(searchWord.isNullOrEmpty()) {
-            searchWord = "안드로이드"
+            searchWord = "카카오"
         }
 
        bookListViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
@@ -71,15 +65,11 @@ class BookListFragment : Fragment() {
            }
        }).get(BookListViewModel::class.java)
 
-        //val itemViewModel =  ViewModelProvider(this).get(BookListViewModel::class.java)
         bookListViewModel.bookPagedList.observe(viewLifecycleOwner, Observer {
-            Log.d(TAG, ">> bookPagedList? ${it}")
             adapter = BookAdapter(context!!, it, bookClickListener)
             adapter.submitList(it)
             recyclerView.adapter = adapter
         })
-
-
     }
 
     override fun onAttach(context: Context) {
@@ -92,12 +82,9 @@ class BookListFragment : Fragment() {
         }
     }
 
-
     interface OnBookSelected {
         fun onBookSelected(book: Book)
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
@@ -110,7 +97,6 @@ class BookListFragment : Fragment() {
             }
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d(TAG, "검색어 변경: "+newText)
-                //adapter.filter.filter(newText)
                 return true
             }
         })

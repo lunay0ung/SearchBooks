@@ -29,18 +29,14 @@ class BookDataSource(
                 if (response.isSuccessful) {
                     val apiResponse = response.body()!!
                     val responseItems = apiResponse.books
-
-                    //Log.i(TAG, ">>>>> 결과? "+ apiResponse.totalCount)
-
                     val key = if (params.key > 1) params.key - 1 else 0
                     responseItems?.let {
-                        Log.i(TAG, ">>>>> loadBefore isbn?  ${responseItems!!.get(0).isbn} ")
                         callback.onResult(responseItems, key)
                     }
                 }
             }
             override fun onFailure(call: Call<BookSearchResponse>, t: Throwable) {
-                Log.e(TAG, "loadBefore onFailure")
+                Log.e(TAG, "loadBefore onFailure: ${t.message}")
             }
         })
     }
@@ -57,24 +53,14 @@ class BookDataSource(
                     val apiResponse = response.body()!!
                     val responseItems = apiResponse.books
                     val meta = apiResponse.meta
-
-                    Log.i(TAG, ">>>>> loadInitial 결과?  ${responseItems!!.get(0).authors!!.get(0)} ")
-                    Log.i(TAG, ">>>>> loadInitial isbn?  ${responseItems!!.get(0).isbn} ")
-
-                    Log.i(TAG, ">>>>> loadInitial meta 결과? ${meta!!.isEnd}")
-
-
-
                     responseItems?.let {
                         callback.onResult(responseItems, null, FIRST_PAGE + 1)
                     }
-
-
                 }
             }
             override fun onFailure(call: Call<BookSearchResponse>, t: Throwable) {
-                Log.e(TAG, ">> loadInitial onFailure: ${t.message}")
-
+                //todo 검색결과가 없을 경우에 대비한 예외처리 필요
+                Log.e(TAG, "loadInitial onFailure: ${t.message}")
             }
         })
     }
@@ -89,8 +75,6 @@ class BookDataSource(
                     val responseItems = apiResponse.books
                     val key = params.key + 1
                     responseItems?.let {
-                        Log.i(TAG, ">>>>> loadAfter isbn?  ${responseItems!!.get(0).isbn} ")
-
                         if(!apiResponse.meta!!.isEnd) {
                             callback.onResult(responseItems, key)
                         }
@@ -98,8 +82,7 @@ class BookDataSource(
                 }
             }
             override fun onFailure(call: Call<BookSearchResponse>, t: Throwable) {
-                Log.e(TAG, "loadAfter onFailure")
-
+                Log.e(TAG, "loadAfter onFailure: ${t.message}")
             }
         })
     }

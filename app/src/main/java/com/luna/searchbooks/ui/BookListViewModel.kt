@@ -16,26 +16,14 @@ class BookListViewModel(
     private val TAG = BookListViewModel::class.java.simpleName
     var bookPagedList: LiveData<PagedList<Book>>
     private var liveDataSource: LiveData<BookDataSource>
-
     init {
         val itemDataSourceFactory = BookDataSourceFactory(keyword)
-        Log.d(TAG, ">>> keyword: $keyword")
-
         liveDataSource = itemDataSourceFactory.bookLiveDataSource
-        Log.d(TAG, ">>> liveDataSource: $liveDataSource")
-
-
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setPageSize(BookDataSource.PAGE_SIZE)
             .build()
-
-        Log.d(TAG, ">>> config pageSize: ${config.pageSize}")
-
         bookPagedList = LivePagedListBuilder(itemDataSourceFactory, config)
             .build()
-
-        Log.d(TAG, ">>> bookPagedList: ${bookPagedList.value}")
-
     }
 }
