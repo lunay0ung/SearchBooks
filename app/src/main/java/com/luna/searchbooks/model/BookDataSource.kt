@@ -9,6 +9,7 @@ import androidx.paging.PageKeyedDataSource
 import com.luna.searchbooks.api.ApiService
 import com.luna.searchbooks.api.ApiServiceBuilder
 import com.luna.searchbooks.api.BookSearchResponse
+import com.luna.searchbooks.ui.BookListFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,7 +64,8 @@ class BookDataSource(
                         Toast.makeText(mCtx, "검색 결과가 없습니다.", LENGTH_LONG).show()
                     }
                     else {
-                        Toast.makeText(mCtx, "총 ${meta.totalCount}건의 책이 조회되었습니다.", LENGTH_LONG).show()
+                        if(BookListFragment.SHOW_SEARCH_RESULT_MESSAGE)
+                            Toast.makeText(mCtx, "총 ${meta.totalCount}건의 책이 조회되었습니다.", LENGTH_LONG).show()
                     }
 
                     responseItems?.let {

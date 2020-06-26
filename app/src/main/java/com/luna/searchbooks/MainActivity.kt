@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelected {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(!query.isNullOrBlank()) {
                     Log.d(TAG, "검색 시작: $query")
+                    BookListFragment.SHOW_SEARCH_RESULT_MESSAGE = true
                     searchWord = query
                     supportFragmentManager
                         .beginTransaction()

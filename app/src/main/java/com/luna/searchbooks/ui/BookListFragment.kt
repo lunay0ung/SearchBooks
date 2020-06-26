@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,11 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.luna.searchbooks.R
 import com.luna.searchbooks.model.Book
+import kotlinx.android.synthetic.main.book_list_fragment.view.*
 
 class BookListFragment : Fragment() {
 
     private val TAG = BookListFragment::class.java.simpleName
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var bookListViewModel: BookListViewModel
     private lateinit var adapter: BookAdapter
     private lateinit var bookClickListener: OnBookSelected
@@ -37,6 +40,7 @@ class BookListFragment : Fragment() {
            fragment.setArguments(args)
            return fragment
        }
+       var SHOW_SEARCH_RESULT_MESSAGE =  false
    }
 
     override fun onCreateView(
@@ -56,9 +60,8 @@ class BookListFragment : Fragment() {
         val args = arguments
         searchWord = args?.getString("query")
 
-        if(searchWord.isNullOrEmpty()) {
+        if(searchWord.isNullOrEmpty())
             searchWord = "카카오"
-        }
 
        bookListViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
