@@ -2,6 +2,7 @@ package com.luna.searchbooks.ui
 
 import android.content.Context
 import android.util.Log
+import android.util.LogPrinter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +19,12 @@ import kotlinx.android.synthetic.main.book_list_item.view.*
 class BookAdapter(
     private val context: Context,
     private val bookList: PagedList<Book>,
-    private val bookClickListner: OnItemClickListener
+    private val bookClickListner: BookListFragment.OnBookSelected
+//    private val bookClickListner: OnItemClickListener
 ) : PagedListAdapter<Book, BookAdapter.BookViewHolder>(BOOK_COMPARATOR) {
 
     private val TAG = BookAdapter::class.java.simpleName
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -34,8 +37,11 @@ class BookAdapter(
 
         val book = getItem(position)
         holder.itemView.setOnClickListener {
-            bookClickListner.onClickBook(book!!)
+           // bookClickListner.onClickBook(book!!)
+            bookClickListner.onBookSelected(book!!)
         }
+
+
         Log.d(TAG, ">>> onBindViewHolder book")
         book?.let { holder.bind(it) }
     }

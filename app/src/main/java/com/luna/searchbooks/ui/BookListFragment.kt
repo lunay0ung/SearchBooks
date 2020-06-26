@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.luna.searchbooks.R
 import com.luna.searchbooks.model.Book
 
-class BookListFragment : Fragment(), BookAdapter.OnItemClickListener {
+class BookListFragment : Fragment() {
+
     private val TAG = BookListFragment::class.java.simpleName
     lateinit var recyclerView: RecyclerView
     private lateinit var bookListViewModel: BookListViewModel
     private lateinit var adapter: BookAdapter
+    private lateinit var bookClickListener: OnBookSelected
    // private lateinit var toolbar: Toolbar
 
     override fun onCreateView(
@@ -55,7 +57,7 @@ class BookListFragment : Fragment(), BookAdapter.OnItemClickListener {
         //val itemViewModel =  ViewModelProvider(this).get(BookListViewModel::class.java)
         bookListViewModel.bookPagedList.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, ">> bookPagedList? ${it}")
-            adapter = BookAdapter(context!!, it, this)
+            adapter = BookAdapter(context!!, it, bookClickListener)
             adapter.submitList(it)
             recyclerView.adapter = adapter
         })
@@ -63,11 +65,22 @@ class BookListFragment : Fragment(), BookAdapter.OnItemClickListener {
 
     }
 
-    override fun onClickBook(book: Book) {
-        Log.d(TAG , "책 클릭 ${book.title}")
-        Toast.makeText(context, "클릭! ${book.title}", LENGTH_LONG)
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnBookSelected) {
+            bookClickListener = context
+        } else {
+            throw ClassCastException(
+                context.toString() + " must implement OnBookSelected.")
+        }
     }
+
+
+    interface OnBookSelected {
+        fun onBookSelected(book: Book)
+    }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
