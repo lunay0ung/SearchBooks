@@ -1,5 +1,6 @@
 package com.luna.searchbooks.ui
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.luna.searchbooks.model.BookDataSource
 import com.luna.searchbooks.model.BookDataSourceFactory
 
 class BookListViewModel(
+    context: Context,
     val keyword: String
 ) : ViewModel() {
 
@@ -17,7 +19,7 @@ class BookListViewModel(
     var bookPagedList: LiveData<PagedList<Book>>
     private var liveDataSource: LiveData<BookDataSource>
     init {
-        val itemDataSourceFactory = BookDataSourceFactory(keyword)
+        val itemDataSourceFactory = BookDataSourceFactory(context, keyword)
         liveDataSource = itemDataSourceFactory.bookLiveDataSource
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)

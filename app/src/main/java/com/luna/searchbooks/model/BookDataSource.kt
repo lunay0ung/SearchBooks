@@ -1,6 +1,9 @@
 package com.luna.searchbooks.model
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 
 import androidx.paging.PageKeyedDataSource
 import com.luna.searchbooks.api.ApiService
@@ -11,10 +14,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BookDataSource(
+    context: Context,
     val keyword: String
 ) : PageKeyedDataSource<Int, Book>() {
 
     private val TAG = BookDataSource::class.java.simpleName
+    private val mCtx = context
 
     companion object {
         const val FIRST_PAGE = 1
@@ -53,13 +58,21 @@ class BookDataSource(
                     val apiResponse = response.body()!!
                     val responseItems = apiResponse.books
                     val meta = apiResponse.meta
+
+                    if(meta!!.totalCount == 0) {
+                        Toast.makeText(mCtx, "검색 결과가 없습니다.", LENGTH_LONG).show()
+                    }
+                    else {
+                        Toast.makeText(mCtx, "총 ${meta.totalCount}건의 책이 조회되었습니다.", LENGTH_LONG).show()
+                    }
+
                     responseItems?.let {
                         callback.onResult(responseItems, null, FIRST_PAGE + 1)
                     }
                 }
             }
             override fun onFailure(call: Call<BookSearchResponse>, t: Throwable) {
-                //todo 검색결과가 없을 경우에 대비한 예외처리 필요
+                //todo 오류 발생 시 예외처리 필요
                 Log.e(TAG, "loadInitial onFailure: ${t.message}")
             }
         })
@@ -73,6 +86,8 @@ class BookDataSource(
                 if (response.isSuccessful) {
                     val apiResponse = response.body()!!
                     val responseItems = apiResponse.books
+                    val meta = apiResponse.meta
+
                     val key = params.key + 1
                     responseItems?.let {
                         if(!apiResponse.meta!!.isEnd) {

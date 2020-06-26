@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.luna.searchbooks.R
@@ -22,6 +23,7 @@ class BookListFragment : Fragment() {
     private lateinit var adapter: BookAdapter
     private lateinit var bookClickListener: OnBookSelected
     var searchWord: String? = "카카오"
+    private lateinit var mCtx: Context
 
    companion object {
        fun newInstance(): BookListFragment {
@@ -49,6 +51,7 @@ class BookListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        mCtx = context!!
 
         val args = arguments
         searchWord = args?.getString("query")
@@ -60,6 +63,7 @@ class BookListFragment : Fragment() {
        bookListViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                return BookListViewModel(
+                   context!!,
                    searchWord!!
                ) as T
            }
@@ -67,10 +71,13 @@ class BookListFragment : Fragment() {
 
         bookListViewModel.bookPagedList.observe(viewLifecycleOwner, Observer {
             adapter = BookAdapter(context!!, it, bookClickListener)
+
+
             adapter.submitList(it)
             recyclerView.adapter = adapter
         })
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
