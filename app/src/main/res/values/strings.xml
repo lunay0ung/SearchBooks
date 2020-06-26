@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SearchBooks</string>
+    <string name="app_name">카카오 책 검색</string>
 
     <string name="search_hint">Kakao Book Search</string>
     <string name="no_results">No results 😓</string>
