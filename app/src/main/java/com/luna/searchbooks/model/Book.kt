@@ -31,7 +31,7 @@ class Book : Serializable {
     @field:SerializedName("isbn")
     var isbn: String? = null
     @field:SerializedName("datetime")
-    var datetime: Date? = null
+    var datetime: String? = null
     @field:SerializedName("authors")
     var authors: List<String>? = null;
     //    var books: List<Book>? = null

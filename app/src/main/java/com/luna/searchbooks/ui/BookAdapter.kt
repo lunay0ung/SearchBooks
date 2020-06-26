@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.luna.searchbooks.R
 import com.luna.searchbooks.model.Book
 import kotlinx.android.synthetic.main.book_list_item.view.*
+import java.text.NumberFormat
 
 class BookAdapter(
     private val context: Context,
@@ -51,17 +52,36 @@ class BookAdapter(
         private val TAG = BookViewHolder::class.java.simpleName
         private val thumb = view.thumbnail
         private val title = view.title
-        private val price = view.price
+        private val salePrice = view.price
+        private val author = view.author
+        private val publisher = view.publisher
+        private val translator = view.translator
+        private val currencyFormat = NumberFormat.getCurrencyInstance()
+        private val status = view.status
 
         fun bind(book: Book) {
-            Log.d(TAG, ">>> BookViewModel book: ${book.title}")
-            title.text = book.title
-            price.text = book.price.toString()
 
             Glide.with(thumb.context)
                 .load(book.thumbnail)
                 .placeholder(R.drawable.ic_search)
-                .into(thumb);
+                .into(thumb)
+
+            val formattedSalePrice = currencyFormat.format(book.sale_price)
+            val formattedPrice = currencyFormat.format(book.price)
+            val authors = book.authors!!
+                .joinToString(separator = ", ")
+
+            title.text = book.title
+            salePrice.text = formattedSalePrice+" (원가: ${formattedPrice})"
+            publisher.text = book.publisher
+            author.text = authors
+            if(!book.translators.isNullOrEmpty()) {
+                val translators = book.translators!!
+                    .joinToString(separator = ", ")
+                translator.text = "| $translators"
+            }
+
+            status.text = book.status
         }
     }
 

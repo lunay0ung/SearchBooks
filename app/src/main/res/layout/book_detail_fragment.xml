@@ -1,18 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="bookModel"
+            type="com.luna.searchbooks.model.Book" />
+    </data>
 
-    <TextView
-        android:id="@+id/textview"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitXY"
+            bind:layout_constraintBottom_toBottomOf="parent"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toTopOf="parent"
+            bind:layout_constraintVertical_bias="0.122" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thumbnail"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="8dp"
+            android:padding="4dp"
+            android:text="@{bookModel.title}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintHorizontal_bias="0.0"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toTopOf="parent"
+            tools:text="부자의 길" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintHorizontal_bias="0.0"
+            bind:layout_constraintStart_toEndOf="@+id/thumbnail"
+            bind:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="kakao pay" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/translator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintHorizontal_bias="0.33"
+            bind:layout_constraintStart_toEndOf="@+id/author"
+            bind:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="번역자" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/publisher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="4dp"
+            android:text="@{bookModel.publisher}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintStart_toEndOf="@+id/thumbnail"
+            bind:layout_constraintTop_toBottomOf="@+id/author"
+            tools:text="카카오페이 출판사"
+                />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/publisher"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintStart_toEndOf="@+id/thumbnail"
+            bind:layout_constraintTop_toBottomOf="@+id/publisher"
+            tools:text="10,000원"
+        />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/price"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintStart_toEndOf="@+id/thumbnail"
+            bind:layout_constraintTop_toBottomOf="@+id/price"
+            tools:text="2009. 02. 10"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/isbn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/price"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintHorizontal_bias="0.0"
+            bind:layout_constraintStart_toEndOf="@+id/thumbnail"
+            bind:layout_constraintTop_toBottomOf="@+id/date"
+            tools:text="292705405" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/contents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
+            android:singleLine="false"
+            android:minLines="2"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:text="@{bookModel.contents}"
+            bind:layout_constraintBottom_toBottomOf="parent"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toBottomOf="@+id/isbn"
+            bind:layout_constraintVertical_bias="0.041"
+            tools:text="안드로이드는 전기양의 꿈을 꾸는가』는 필립 K. 딕의 작품들 중 대중적으로 가장 유명한 작품으로, SF소설의 정수라 할 수 있다.
+             핵전쟁 이후 지구가 황폐해지자 식민 행성이 개척되고, 인간과 유사한 로봇 안드로이드를 제작하는 수준으로 발전된 과학 문명을 배경으로 한다.
+             최종세계대전 이후 방사능 낙진으로 뒤덮여 불모지가 된 지구. 대부분의 사람들은 화성으로 이주하여 일종의 로봇 노예인 안드로이드를 부리며 살아간다. 그러던 어느 날, 지구로 도주해" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/moreBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="상세 페이지로 이동..."
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toBottomOf="@+id/contents"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

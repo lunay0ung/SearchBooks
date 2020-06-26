@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import com.luna.searchbooks.model.Book
 import com.luna.searchbooks.ui.BookDetailFragment
 import com.luna.searchbooks.ui.BookListFragment
@@ -13,15 +12,11 @@ import com.luna.searchbooks.ui.BookListFragment
 class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelected {
 
     private val TAG = MainActivity::class.java.simpleName
-    //private lateinit var toolbar: Toolbar
-    private val fragmentManager = supportFragmentManager
-    private val bookListFragment = BookListFragment()
-   private val bookDetailFragment = BookDetailFragment()
+    private lateinit var searchWord : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -47,6 +42,14 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelected {
         searchView.queryHint = "책 제목 검색"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                if(!query.isNullOrBlank()) {
+                    Log.d(TAG, "검색 시작: $query")
+                    searchWord = query
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.root_layout, BookListFragment.newInstance(query!!), "bookList")
+                        .commit()
+                }
                 return false
             }
             override fun onQueryTextChange(newText: String?): Boolean {

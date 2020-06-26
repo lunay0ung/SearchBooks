@@ -21,11 +21,20 @@ class BookListFragment : Fragment() {
     private lateinit var bookListViewModel: BookListViewModel
     private lateinit var adapter: BookAdapter
     private lateinit var bookClickListener: OnBookSelected
-   // private lateinit var toolbar: Toolbar
+    var searchWord: String? = "카카오"
 
    companion object {
        fun newInstance(): BookListFragment {
            return BookListFragment()
+       }
+
+       fun newInstance(query: String): BookListFragment {
+           Log.d("newInstance", ">> 전달된 쿼리: $query")
+           val fragment = BookListFragment()
+           val args = Bundle()
+           args.putString("query", query)
+           fragment.setArguments(args)
+           return fragment
        }
    }
 
@@ -45,10 +54,19 @@ class BookListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+
+        val args = arguments
+        searchWord = args?.getString("query")
+        Log.d(TAG, "넘어올까 $searchWord")
+
+        if(searchWord.isNullOrEmpty()) {
+            searchWord = "안드로이드"
+        }
+
        bookListViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                return BookListViewModel(
-                   "안드로이드"
+                   searchWord!!
                ) as T
            }
        }).get(BookListViewModel::class.java)
