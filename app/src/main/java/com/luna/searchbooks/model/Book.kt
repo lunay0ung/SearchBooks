@@ -1,6 +1,7 @@
 package com.luna.searchbooks.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 /*
@@ -20,7 +21,7 @@ thumbnail	String	도서 표지 미리보기 URL
 status	String	도서 판매 상태 정보 (정상, 품절, 절판 등)
 상황에 따라 변동 가능성이 있으므로 문자열 처리 지양, 단순 노출 요소로 활용 권장
 * */
-class Book {
+class Book : Serializable {
     @field:SerializedName("title")
     var title: String? = null
     @field:SerializedName("contents")
