@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -13,12 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.luna.searchbooks.R
+import com.luna.searchbooks.model.Book
 
-class BookListFragment : Fragment(){
+class BookListFragment : Fragment(), BookAdapter.OnItemClickListener {
     private val TAG = BookListFragment::class.java.simpleName
-    lateinit var textView: TextView
     lateinit var recyclerView: RecyclerView
     private lateinit var bookListViewModel: BookListViewModel
+    private lateinit var adapter: BookAdapter
    // private lateinit var toolbar: Toolbar
 
     override fun onCreateView(
@@ -37,7 +40,6 @@ class BookListFragment : Fragment(){
         //textView = view.findViewById(R.id.first_fragment_text)
        // textView.text  = "1st Fragment"
 
-        val adapter = BookAdapter()
         //toolbar = view.findViewById(R.id.toolbar)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -53,10 +55,17 @@ class BookListFragment : Fragment(){
         //val itemViewModel =  ViewModelProvider(this).get(BookListViewModel::class.java)
         bookListViewModel.bookPagedList.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, ">> bookPagedList? ${it}")
+            adapter = BookAdapter(context!!, it, this)
             adapter.submitList(it)
+            recyclerView.adapter = adapter
         })
-        recyclerView.adapter = adapter
 
+
+    }
+
+    override fun onClickBook(book: Book) {
+        Log.d(TAG , "책 클릭 ${book.title}")
+        Toast.makeText(context, "클릭! ${book.title}", LENGTH_LONG)
 
     }
 

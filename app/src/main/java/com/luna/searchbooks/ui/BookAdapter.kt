@@ -1,9 +1,12 @@
 package com.luna.searchbooks.ui
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +15,11 @@ import com.luna.searchbooks.R
 import com.luna.searchbooks.model.Book
 import kotlinx.android.synthetic.main.book_list_item.view.*
 
-class BookAdapter : PagedListAdapter<Book, BookAdapter.BookViewHolder>(BOOK_COMPARATOR) {
+class BookAdapter(
+    private val context: Context,
+    private val bookList: PagedList<Book>,
+    private val bookClickListner: OnItemClickListener
+) : PagedListAdapter<Book, BookAdapter.BookViewHolder>(BOOK_COMPARATOR) {
 
     private val TAG = BookAdapter::class.java.simpleName
 
@@ -26,6 +33,9 @@ class BookAdapter : PagedListAdapter<Book, BookAdapter.BookViewHolder>(BOOK_COMP
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
 
         val book = getItem(position)
+        holder.itemView.setOnClickListener {
+            bookClickListner.onClickBook(book!!)
+        }
         Log.d(TAG, ">>> onBindViewHolder book")
         book?.let { holder.bind(it) }
     }
@@ -48,6 +58,12 @@ class BookAdapter : PagedListAdapter<Book, BookAdapter.BookViewHolder>(BOOK_COMP
                 .into(thumb);
         }
     }
+
+    //상품 클릭 시 동작할 리스너 인터페이스 -> viewmodel이나 activity에서 구현해 사용 가능
+    interface OnItemClickListener {
+        fun onClickBook(book: Book)
+    }
+
 
     companion object {
         private val BOOK_COMPARATOR = object : DiffUtil.ItemCallback<Book>() {
