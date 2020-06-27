@@ -66,7 +66,7 @@ class BookAdapter(
                 .joinToString(separator = ", ")
 
             title.text = book.title
-            salePrice.text = formattedSalePrice+" (원가: ${formattedPrice})"
+            salePrice.text = formattedSalePrice+" (정가: ${formattedPrice})"
             publisher.text = book.publisher
             author.text = authors
             if(!book.translators.isNullOrEmpty()) {

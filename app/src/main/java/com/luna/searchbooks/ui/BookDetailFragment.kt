@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.luna.searchbooks.R
 import com.luna.searchbooks.databinding.BookDetailFragmentBinding
 import com.luna.searchbooks.model.Book
-import org.w3c.dom.Text
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.ParseException
@@ -80,7 +79,7 @@ class BookDetailFragment: Fragment() {
                 .joinToString(separator = ", ")
             translator.text = "| $translators"
         }
-        price.text = formattedSalePrice+" (원가: ${formattedPrice})"
+        price.text = formattedSalePrice+" (정가: ${formattedPrice})"
         isbn.text = "ISBN: ${book.isbn}"
 
         //[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].000+[tz]
