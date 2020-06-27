@@ -57,7 +57,7 @@ class BookAdapter(
 
             Glide.with(thumb.context)
                 .load(book.thumbnail)
-                .placeholder(R.drawable.ic_loading)
+                .placeholder(R.drawable.ic_defaultimage)
                 .into(thumb)
 
             val formattedSalePrice = currencyFormat.format(book.sale_price)
