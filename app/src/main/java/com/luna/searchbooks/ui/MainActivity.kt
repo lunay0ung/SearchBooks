@@ -1,13 +1,12 @@
-package com.luna.searchbooks
+package com.luna.searchbooks.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
+import com.luna.searchbooks.R
 import com.luna.searchbooks.model.Book
-import com.luna.searchbooks.ui.BookDetailFragment
-import com.luna.searchbooks.ui.BookListFragment
 
 class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelected {
 
