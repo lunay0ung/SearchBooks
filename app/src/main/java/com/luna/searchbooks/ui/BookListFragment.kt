@@ -57,13 +57,22 @@ class BookListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         mCtx = context!!
 
+        /*
         val args = arguments
         searchWord = args?.getString("query")
+
 
         if(searchWord.isNullOrEmpty())
             searchWord = "카카오"
 
-       bookListViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
+*/
+        searchWord = arguments?.let {
+            arguments!!.getString("query")
+        } ?: "카카오"
+
+
+
+        bookListViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                return BookListViewModel(
                    context!!,
@@ -74,8 +83,6 @@ class BookListFragment : Fragment() {
 
         bookListViewModel.bookPagedList.observe(viewLifecycleOwner, Observer {
             adapter = BookAdapter(context!!, it, bookClickListener)
-
-
             adapter.submitList(it)
             recyclerView.adapter = adapter
         })
